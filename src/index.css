@@ -1,1 +1,123 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Anton", Impact, sans-serif;
+  --font-script: "Caveat", cursive;
+  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-obsidian: #09090B;
+  --color-surface: #111115;
+  --color-surface-elevated: #17171D;
+  --color-ink: #F1EFEB;
+  --color-ink-muted: #9A9AA5;
+  --color-crimson: #E11D48;
+  --color-crimson-deep: #B80F30;
+  --color-crimson-dark: #6E071B;
+  --color-hairline: rgba(255, 255, 255, 0.09);
+}
+
+:root {
+  color-scheme: dark;
+  --background: #09090B;
+  --foreground: #F1EFEB;
+  --accent: #E11D48;
+}
+
+html {
+  background-color: #09090B;
+  color: #F1EFEB;
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  background-color: #09090B;
+  color: #F1EFEB;
+  overflow-x: clip;
+  margin: 0;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.01em;
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+.font-mono-code {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Blueprint grid background used exclusively during the cursor panel-building phase */
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Editorial crimson gradient cards matching reference Education & Contact panels */
+.crimson-panel {
+  background: radial-gradient(circle at 28% 18%, #DC1842 0%, #9E0C2A 54%, #650619 100%);
+}
+
+/* Subtle horizontal marquee for skills/tools strip */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Ambient floating cursor drift */
+@keyframes cursor-drift-a {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px);
+  }
+  50% {
+    transform: translate3d(18px, -14px, 0px);
+  }
+}
+
+@keyframes cursor-drift-b {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px);
+  }
+  50% {
+    transform: translate3d(-16px, 16px, 0px);
+  }
+}
+
+.cursor-drift-a {
+  animation: cursor-drift-a 9s ease-in-out infinite;
+}
+
+.cursor-drift-b {
+  animation: cursor-drift-b 11s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee,
+  .cursor-drift-a,
+  .cursor-drift-b {
+    animation: none !important;
+  }
+}
