@@ -1,5 +1,7 @@
+import type React from 'react';
 import { ArrowUpRight, Award, ExternalLink, Maximize2, ShieldCheck } from 'lucide-react';
 import { ACHIEVEMENT, TOOLS_MARQUEE } from '../data/portfolioData';
+import { isBase64PdfDataUri, openOrDownloadPdf } from '../utils/openEmbeddedPdf';
 import { AgentBuildPanel } from './AgentBuildPanel';
 
 interface AchievementSectionProps {
@@ -7,6 +9,13 @@ interface AchievementSectionProps {
 }
 
 export function AchievementSection({ onOpenCertificate }: AchievementSectionProps) {
+  const handlePdfClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isBase64PdfDataUri(ACHIEVEMENT.certificatePdfPath)) {
+      e.preventDefault();
+      openOrDownloadPdf(ACHIEVEMENT.certificatePdfPath);
+    }
+  };
+
   return (
     <>
       {/* Editorial Tools & Interests Marquee Divider matching reference */}
@@ -115,6 +124,7 @@ export function AchievementSection({ onOpenCertificate }: AchievementSectionProp
                   <span>{ACHIEVEMENT.position} · {ACHIEVEMENT.dates}</span>
                   <a
                     href={ACHIEVEMENT.certificatePdfPath}
+                    onClick={handlePdfClick}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-[#F1EFEB] hover:text-[#E11D48] transition-colors"

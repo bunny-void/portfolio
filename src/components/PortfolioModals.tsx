@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Award, CheckCircle2, ExternalLink, Github, Info, X } from 'lucide-react';
 import { ACHIEVEMENT, type ProjectItem } from '../data/portfolioData';
+import { isBase64PdfDataUri, openOrDownloadPdf } from '../utils/openEmbeddedPdf';
 
 interface ProjectDetailModalProps {
   project: ProjectItem | null;
@@ -200,6 +201,12 @@ export function CertificateModal({ open, onClose }: CertificateModalProps) {
           </span>
           <a
             href={ACHIEVEMENT.certificatePdfPath}
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+              if (isBase64PdfDataUri(ACHIEVEMENT.certificatePdfPath)) {
+                e.preventDefault();
+                openOrDownloadPdf(ACHIEVEMENT.certificatePdfPath);
+              }
+            }}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 bg-[#C81034] px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:bg-[#E11D48] transition-colors"

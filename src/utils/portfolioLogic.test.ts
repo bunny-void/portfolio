@@ -137,3 +137,11 @@ test('computeScrollProgress clamps cleanly between 0 and 1', () => {
   assert.equal(computeScrollProgress(5000, 4000, 900), 1);
   assert.equal(computeScrollProgress(0, 800, 900), 0);
 });
+
+test('Base64 PDF data URI detection and byte decoding work accurately', async () => {
+  const { isBase64PdfDataUri, decodeBase64ToBytes } = await import('./openEmbeddedPdf');
+  assert.equal(isBase64PdfDataUri('/assets/aistudio/winner_certificate_9ae3549a.pdf'), false);
+  assert.equal(isBase64PdfDataUri('data:application/pdf;base64,JVBERi0x'), true);
+  const bytes = decodeBase64ToBytes('JVBERi0x');
+  assert.equal(new TextDecoder().decode(bytes), '%PDF-1');
+});
